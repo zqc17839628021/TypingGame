@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+	<script src="animate.js"></script>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		html,body{
+			height: 100%;
+		}
+		#maxbox{
+			width: 100%;
+			height: 100%;
+			background: url(img/main_bg.jpg) no-repeat center ;
+			background-size: 100% 100%;
+			position:relative;
+			overflow: hidden;
+		}
+		#good{
+			width: 400px;
+			height: 600px;
+			background: url(img/popup.png);
+			background-size:100% 100%;
+			position: absolute;
+			top: -600px;
+			left: 50%;
+			transform: translate(-50%);
+			font-size: 80px;
+			line-height: 800px;
+			text-align: center;
+		}
+		#btn{
+			width: 100px;
+			height: 50px;
+			border-radius: 30px;
+			position: absolute;
+			top: 500px;
+			left: 30px;
+		}
+		#btn1{
+			width: 100px;
+			height: 50px;
+			border-radius: 30px;
+			position: absolute;
+			top: 500px;
+			left: 150px;
+		}
+		#btn2{
+			width: 100px;
+			height: 50px;
+			border-radius: 30px;
+			position: absolute;
+			top: 500px;
+			left: 270px;
+		}
+		#upgrade{
+			width: 300px;
+			height:100px;
+			font-size: 80px;
+			color: rosybrown;
+			position: absolute;
+			top: 100px;
+			left: -300px;
+		}
+		#text{
+			width:100px;
+			height: 30px;
+			padding: 0 10px;
+		}
+		#minbox{
+			width: 100%;
+			height: 100%;
+		}
+		.zimu{
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			background-color: darkcyan;
+			text-align: center;
+			line-height: 50px;
+			font-size: 36px;
+			position: absolute;
+			color: #fff;	
+		}
+		span{
+			font-size: 30px;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="maxbox">
+		<div id="good">
+			打字游戏
+			<button id="btn">新手模式</button>
+			<button id="btn1">中级模式</button>
+			<button id="btn2">地狱模式</button>
+		</div>
+			<div id="upgrade">升级</div>
+			<span>得分：</span><input type="text" value="0" id="text" disabled/>
+			<div id="minbox"></div>
+	</div>
+</body>
+<script>
+		function Game(btn,btn1,btn2,obj1,obj2,obj3,obj4){
+			this.zimuList=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]; 
+			this.btn = document.getElementById(btn);
+			this.btn1 = document.getElementById(btn1);
+			this.btn2 = document.getElementById(btn2);
+			this.good = document.getElementById(obj1);
+			this.boxright = document.getElementById(obj2);
+			this.div = document.getElementsByClassName(obj3);
+			this.upgrade = document.getElementById(obj4);
+			this.text = document.getElementById('text');
+			// this.height = document.documentElement.clientHeight;    //浏览器的高
+			this.num = 0;    	 //变量
+			this.obj3 = obj3;	 //重新获取盒子个速
+			var that = this;     //this指向
+			this.t = null;       //计时器
+			this.values = 0;     //输入值
+			//动画
+			animate(good,{top:-180},1000,function(){  
+				animate(good,{top:-220},500)
+			})	
+			//三模式随机,随机个数
+			this.arr1=function(s){
+				return parseInt(Math.random()*3 + s)
+			}
+			this.arr = [2,3,4];
+			this.xia = 0;
+			var sjs;
+			//三模式随机速度
+			this.arrs = [5,8,11];
+			this.xia1 = 0;	
+			//盒子下落的高度
+			this.eee = function(x){
+				for(var i=0; i<this.div.length; i++){
+					if(this.num==x){
+						clearInterval(this.t);
+						this.boxright.innerHTML="";
+						this.num = 0;
+						document.querySelector('#text').value = this.values = 0;
+						animate(good,{top:-180},1000,function(){
+							animate(good,{top:-220},500)
+						})
+						alert('游戏结束');
+					}else{
+							var top = this.num*this.arrs[this.xia1];
+							this.div[i].style.top = top/10 + 'px';	
+					}
+				}
+			}
+			//升级所需
+			this.rrr = function(r){
+				clearInterval(this.t);
+				this.boxright.innerHTML="";
+				this.num = 0;
+				this.xia = r;
+				this.xia1 = r;
+				this.play();
+				this.t = setInterval(this.divDown.bind(this),10);
+				animate(upgrade,{left:1300},4000,function(){
+					animate(upgrade,{left:-300},4000)
+				})
+			}		
+			//点击事件
+			this.btn.onclick = function(){
+				animate(good,{top:-600},1000,function(){
+					that.xia = 0;
+					that.xia1 = 0;
+					that.play();
+					that.t = setInterval(that.divDown.bind(that),10);
+				})
+			}
+			this.btn1.onclick = function(){
+				animate(good,{top:-600},1000,function(){
+					that.xia = 1;
+					that.xia1 = 1;
+					that.play();
+					that.t = setInterval(that.divDown.bind(that),10);
+				})
+			}
+			this.btn2.onclick = function(){
+				animate(good,{top:-600},1000,function(){
+					that.xia = 2;
+					that.xia1 = 2;
+					that.play();
+					that.t = setInterval(that.divDown.bind(that),10);
+				})
+			}
+		}
+			//原型
+			Game.prototype={
+				//创建div		
+				play:function(){
+					sjs = this.arr1(this.arr[this.xia])
+					for(var i=0; i<sjs; i++){
+						var div = document.createElement('div');
+						div.className = 'zimu';
+						div.style.top = 0;
+						div.innerHTML = this.zimuList[Math.floor(Math.random()*26)];
+						div.style.left = Math.random()*1000+140 + 'px';
+						this.boxright.appendChild(div);
+					}
+				},	
+				//盒子下落
+				divDown:function(){
+					this.num++;
+					this.div = document.getElementsByClassName(this.obj3);
+						switch(this.arrs[this.xia1]){
+							case 5:
+								this.eee(101*10)
+							break;		
+							case 8:
+								this.eee(63*10)
+							break;
+							case 11:
+								this.eee(46*10)
+							break;
+					}
+					this.deleteDiv();
+				},	
+				//键盘事件
+				deleteDiv:function(){
+					var _this = this;
+					document.onkeydown=function(e){
+						var e = e || event;
+						var key = String.fromCharCode(e.keyCode);
+						for(var i=0; i<_this.div.length; i++){
+							if(key == _this.div[i].innerHTML){
+								_this.div[i].remove();
+								sjs--;
+								_this.values++;
+								document.querySelector('#text').value = _this.values;
+								if(_this.values == 5){
+									_this.rrr(1)
+								}
+								if(_this.values == 20){
+									_this.rrr(2)
+								}
+								if(_this.values == 35){
+									clearInterval(this.t);
+									_this.boxright.innerHTML="";
+									document.querySelector('#text').value =  _this.values = 0;
+									_this.num = 0;
+									alert('通关');   
+									animate(good,{top:-180},1000,function(){
+										animate(good,{top:-220},500)
+									})
+								}
+								if(sjs == 0){
+									clearInterval(_this.t);
+									_this.num = 0;
+									_this.play();
+									_this.t = setInterval(_this.divDown.bind(_this),10);
+								}
+								break;
+							}
+						}				
+					}
+				}	
+			}
+		var cc = new Game('btn','btn1','btn2','good','minbox','zimu','upgrade');	
+			
+</script>
+</html>

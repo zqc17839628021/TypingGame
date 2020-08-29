@@ -61,7 +61,7 @@
 			left: 270px;
 		}
 		#upgrade{
-			width: 300px;
+			width: 299px;
 			height:100px;
 			font-size: 80px;
 			color: rosybrown;
@@ -87,7 +87,7 @@
 			line-height: 50px;
 			font-size: 36px;
 			position: absolute;
-			color: #fff;	
+			color: #fff;
 		}
 		span{
 			font-size: 30px;
@@ -110,7 +110,7 @@
 </body>
 <script>
 		function Game(btn,btn1,btn2,obj1,obj2,obj3,obj4){
-			this.zimuList=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]; 
+			this.zimuList=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 			this.btn = document.getElementById(btn);
 			this.btn1 = document.getElementById(btn1);
 			this.btn2 = document.getElementById(btn2);
@@ -126,9 +126,9 @@
 			this.t = null;       //计时器
 			this.values = 0;     //输入值
 			//动画
-			animate(good,{top:-180},1000,function(){  
+			animate(good,{top:-180},1000,function(){
 				animate(good,{top:-220},500)
-			})	
+			})
 			//三模式随机,随机个数
 			this.arr1=function(s){
 				return parseInt(Math.random()*3 + s)
@@ -138,7 +138,7 @@
 			var sjs;
 			//三模式随机速度
 			this.arrs = [5,8,11];
-			this.xia1 = 0;	
+			this.xia1 = 0;
 			//盒子下落的高度
 			this.eee = function(x){
 				for(var i=0; i<this.div.length; i++){
@@ -153,7 +153,7 @@
 						alert('游戏结束');
 					}else{
 							var top = this.num*this.arrs[this.xia1];
-							this.div[i].style.top = top/10 + 'px';	
+							this.div[i].style.top = top/10 + 'px';
 					}
 				}
 			}
@@ -169,7 +169,7 @@
 				animate(upgrade,{left:1300},4000,function(){
 					animate(upgrade,{left:-300},4000)
 				})
-			}		
+			}
 			//点击事件
 			this.btn.onclick = function(){
 				animate(good,{top:-600},1000,function(){
@@ -198,7 +198,7 @@
 		}
 			//原型
 			Game.prototype={
-				//创建div		
+				//创建div
 				play:function(){
 					sjs = this.arr1(this.arr[this.xia])
 					for(var i=0; i<sjs; i++){
@@ -209,7 +209,7 @@
 						div.style.left = Math.random()*1000+140 + 'px';
 						this.boxright.appendChild(div);
 					}
-				},	
+				},
 				//盒子下落
 				divDown:function(){
 					this.num++;
@@ -217,7 +217,7 @@
 						switch(this.arrs[this.xia1]){
 							case 5:
 								this.eee(101*10)
-							break;		
+							break;
 							case 8:
 								this.eee(63*10)
 							break;
@@ -226,7 +226,7 @@
 							break;
 					}
 					this.deleteDiv();
-				},	
+				},
 				//键盘事件
 				deleteDiv:function(){
 					var _this = this;
@@ -250,7 +250,7 @@
 									_this.boxright.innerHTML="";
 									document.querySelector('#text').value =  _this.values = 0;
 									_this.num = 0;
-									alert('通关');   
+									alert('通关');
 									animate(good,{top:-180},1000,function(){
 										animate(good,{top:-220},500)
 									})
@@ -263,11 +263,11 @@
 								}
 								break;
 							}
-						}				
+						}
 					}
-				}	
+				}
 			}
-		var cc = new Game('btn','btn1','btn2','good','minbox','zimu','upgrade');	
-			
+		var cc = new Game('btn','btn1','btn2','good','minbox','zimu','upgrade');
+
 </script>
 </html>
